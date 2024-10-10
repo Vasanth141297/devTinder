@@ -12,10 +12,15 @@ app.post("/signup" , async(req,res)=>{
     mailId:"vasanthmech1222@gmail.com"
     })
 
-await user.save();
+try{
+    await user.save();
 res.send("Data saved successfully");
-});
+}
+catch(err){
+    res.status(400).send("Error while saving user data" + err.message);
+}
 
+});
 
 
 
@@ -23,11 +28,10 @@ connectDB()
     .then(()=>{
         console.log("Database connected successfully....");
         app.listen(port , () =>{
-            console.log("The port is listening in 1848...");
+            console.log("The port is listening in ${port}...");
         })
     })
    
     .catch((err)=>{
         console.error("Database is not conneted")
     });
-

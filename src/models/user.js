@@ -8,10 +8,10 @@ const userSchema = mongoose.Schema({
         type: String
     },
     emailId: {
-        type:String
+        type: String
     },
     password:{
-        type:String
+        type: String
     },
     age: {
         type: Number
