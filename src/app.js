@@ -6,7 +6,8 @@ const User = require("./models/user");
 
 app.use(express.json());
 
-app.post("/signup" , async(req,res)=>{
+
+app.post("/signup" , async (req,res)=>{
     const user = new User(req.body);
 
 try{
@@ -31,13 +32,45 @@ catch(err){
 }
 })
 
+app.delete("/deleteuser", async (req,res)=>{
 
+    const userId = req.body.userId;
+
+try{
+    
+    const deluser = await User.findByIdAndDelete(userId);
+    res.send("User deleted Successfully");
+}
+catch(err){
+
+    res.status(404).send("Something went wrong");
+}
+});
+
+app.patch("/updateuser", async (req,res) => {
+    
+    const userId = req.body.userId;
+    const data = req.body;
+try {
+    
+    const user = await User.findByIdAndUpdate({_id:userId},data ,{
+        returnDocument : 'before',
+        
+    });
+    res.send("User updated Successfully");
+} 
+catch (err) {
+    res.status(404).send("Something went wrong");
+}
+
+})
+ 
 
 connectDB()
     .then(()=>{
         console.log("Database connected successfully....");
         app.listen(port , () =>{
-            console.log("The port is listening in ${port}...");
+            console.log("The port is listening in 1848...");
         })
     })
    
